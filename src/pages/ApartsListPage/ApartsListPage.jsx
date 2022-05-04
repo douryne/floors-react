@@ -9,14 +9,14 @@ import classes from './ApartsListPage.module.css';
 
 const ApartsListPage = () => {
   const [apartments, setApartments] = useState([]);
-  const [selectedSort, setSelectedSort] = useState('');
+  const [selectedSort, setSelectedSort] = useState({sortType: '', from: ''});
 
   const [fetchAparts, isLoading, error] = useFetching(async () => {
     const apartamentsRes = await fetchApartaments();
     setApartments(apartamentsRes);
   });
 
-  const options = [
+  const sortTypes = [
     {name: 'By ID', value: 'id'},
     {name: 'By Floor', value: 'floor'},
     {name: 'By Price', value: 'price'},
@@ -24,6 +24,11 @@ const ApartsListPage = () => {
     {name: 'By Total Area', value: 'area_total'},
     {name: 'By Kitchen Area', value: 'area_kitchen'},
     {name: 'By Live Area', value: 'area_live'},
+  ]
+
+  const fromToTypes = [
+    {name: 'From Min To Max', value: 'min'},
+    {name: 'From Max To Min', value: 'max'}
   ]
 
   const sortedAparts = useSortedAparts(apartments, selectedSort);
@@ -36,12 +41,20 @@ const ApartsListPage = () => {
   return (
     <div>
       <h1 className={classes.heading}>Aparts List</h1>
-      <MySelect
-        value={selectedSort}
-        onSelectChange={value => setSelectedSort(value)}
-        options={options}
-        defaultValue='Sort by'
-      />
+      <div className={classes.sortSection}>
+        <MySelect
+          value={selectedSort.sortType}
+          onSelectChange={value => setSelectedSort({...selectedSort, sortType: value})}
+          options={sortTypes}
+          defaultValue={{name: 'Sort By', value: ''}}
+        />
+        <MySelect
+          value={selectedSort.from}
+          onSelectChange={value => setSelectedSort({...selectedSort, from: value})}
+          options={fromToTypes}
+          defaultValue={{name: 'From To', value: ''}}
+        />
+      </div>
       {
         isLoading ? (
           <h2>Loading...</h2>

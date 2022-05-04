@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import ApartComponent from '../../components/ApartComponent/ApartComponent';
 import MySelect from '../../components/UI/MySelect/MySelect';
 import { useSortedAparts } from '../../hooks/useSortedAparts';
 import { useFetching } from '../../hooks/useFetching';
+import ApartsList from '../../components/ApartsList/ApartsList';
 
 import classes from './ApartsListPage.module.css';
 
@@ -49,17 +49,7 @@ const ApartsListPage = () => {
           error ? (
             <h2>{error}</h2>
           ) : (
-            sortedAparts.map(apart => (
-              <ApartComponent
-                key={apart.id}
-                id={apart.id}
-                area_total={apart.area_total}
-                floor={apart.floor}
-                rooms={apart.rooms}
-                price={apart.price}
-                img={apart.layout_image}
-              />
-            ))
+            <ApartsList sortedAparts={sortedAparts} />
           )
         )
       }

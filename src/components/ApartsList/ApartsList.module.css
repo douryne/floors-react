@@ -1,0 +1,11 @@
+.list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media screen and (max-width: 560px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+}

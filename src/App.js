@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import ApartComponent from './components/ApartComponent/ApartComponent';
 import MySelect from './components/UI/MySelect/MySelect';
+import { useSortedAparts } from './hooks/useSortedAparts';
 import './App.css';
 
 function App() {
   const [apartments, setApartments] = useState([]);
-  const [sortedAparts, setSortedAparts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedSort, setSelectedSort] = useState('');
 
@@ -14,20 +14,14 @@ function App() {
     {name: 'By Price', value: 'price'}
   ]
 
+  const sortedAparts = useSortedAparts(apartments, selectedSort);
+
   const fetchData = async () => {
     const data = await fetch('http://localhost:3001/getAparts');
     const response = await data.json();
     setApartments(response);
   }
 
-  useMemo(() => {
-    if(!selectedSort) {
-      setSortedAparts(apartments)
-      return;
-    };
-    const sorted = [...apartments].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
-    setSortedAparts(sorted)
-  }, [selectedSort, apartments])
 
   useEffect(() => {
     setLoading(true);

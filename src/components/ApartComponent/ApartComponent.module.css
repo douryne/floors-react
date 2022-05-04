@@ -1,9 +1,16 @@
 .apart {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 50px rgba(8, 18, 43, 0.3);
   padding: 20px 40px;
   margin: 50px 0;
   border-radius: 20px;
-  width: 80%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+}
+
+.apart:hover {
+  box-shadow: 0 0 50px rgba(131, 4, 4, 0.4);
 }
 
 .heading {
@@ -35,4 +42,9 @@
   font-size: 1.5rem;
   font-weight: 300;
   color: brown;
+}
+
+.img {
+  max-width: 300px;
+  margin-left: auto;
 }

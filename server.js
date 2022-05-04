@@ -23,6 +23,12 @@ app.get('/getAparts', (req, res) => {
   res.json(apartments);
 })
 
+app.get('/getApartByID', (req, res) => {
+  const id = req.query.id;
+  const apart = apartments.find(ap => ap.id === id);
+  res.json(apart);
+})
+
 app.use(express.json());
 app.use(express.static('build'));
 

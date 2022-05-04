@@ -1,10 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import classes from './ApartComponent.module.css';
 
 const ApartComponent = ({id, area_total, floor, rooms, price, img}) => {
+  const navigate = useNavigate();
+
   return (
-    <div className={classes.apart}>
-      <div className={classes.text_content}>
+    <div className={classes.apart} onClick={() => navigate(`/${id}`)}>
+      <div className={classes.textContent}>
         <h2 className={classes.heading}>
           Квартира: <span className={classes.id}>{id}</span>
         </h2>

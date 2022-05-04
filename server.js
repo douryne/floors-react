@@ -1,40 +1,8 @@
 const express = require('express');
+const fs = require('fs');
+const csv = require('csv-parser')
 
-const apartments = [
-  {
-    id: 1,
-    floor: 1,
-    pos_on_floor: 1,
-    price: 3,
-    rooms: 3,
-    area_total: 85.7,
-    area_kitchen: 16.8,
-    area_live: 46.6,
-    layout_image: "src/assets/img.png"
-  },
-  {
-    id: 2,
-    floor: 2,
-    pos_on_floor: 1,
-    price: 3,
-    rooms: 3,
-    area_total: 85.7,
-    area_kitchen: 16.8,
-    area_live: 46.6,
-    layout_image: "src/assets/img.png"
-  },
-  {
-    id: 3,
-    floor: 3,
-    pos_on_floor: 1,
-    price: 3,
-    rooms: 3,
-    area_total: 85.7,
-    area_kitchen: 16.8,
-    area_live: 46.6,
-    layout_image: "src/assets/img.png"
-  }
-];
+const apartments = [];
 
 const PORT = 3001;
 const app = express();
@@ -45,6 +13,11 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+fs.createReadStream('flats_data.csv')
+  .pipe(csv())
+  .on('data', (data) => apartments.push(data))
+  .on('end', () => {});
 
 app.get('/getAparts', (req, res) => {
   res.json(apartments);

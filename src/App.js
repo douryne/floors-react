@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [apartments, setApartments] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async () => {
+    const data = await fetch('http://localhost:3001/getAparts');
+    const response = await data.json();
+    setApartments(response);
+  }
+
+  useEffect(() => {
+    setLoading(true);
+    try {
+      fetchData();
+      setLoading(false);
+    } catch (e) {
+      console.log(e.message);
+    }
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Works!</h1>
+      {
+        loading ? (
+          <h2>Loading...</h2>
+        ) : (
+          apartments.map(apart => (
+            <div key={apart.id}>{apart.floor}</div>
+          ))
+        )
+      }
     </div>
   );
 }

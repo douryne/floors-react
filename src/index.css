@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: clamp(0.75rem, 0.65rem + 0.5vw, 1.25rem);
 }
 
 code {

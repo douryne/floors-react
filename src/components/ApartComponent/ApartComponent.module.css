@@ -1,20 +1,25 @@
 .apart {
   box-shadow: 0 0 50px rgba(8, 18, 43, 0.3);
-  padding: 20px 40px;
+  padding: 20px 10px;
   margin: 50px 0;
   border-radius: 20px;
   display: flex;
   align-items: center;
   cursor: pointer;
   transition: all .3s ease-in-out;
+  flex-wrap: wrap;
 }
 
 .apart:hover {
   box-shadow: 0 0 50px rgba(131, 4, 4, 0.4);
 }
 
+.text_content {
+  margin: 0 auto;
+}
+
 .heading {
-  font-size: 2rem;
+  font-size: 2em;
   color: rgb(8, 18, 43);
   font-weight: 300;
   margin: 0;
@@ -31,20 +36,21 @@
 }
 
 .list li {
-  line-height: 2rem;
-  font-size: 1.1rem;
+  line-height: 2em;
+  font-size: 1.1em;
   color: black;
   opacity: 0.8;
 }
 
 .price {
   color: rgb(8, 18, 43);
-  font-size: 1.5rem;
+  font-size: 1.5em;
   font-weight: 300;
   color: brown;
 }
 
 .img {
   max-width: 300px;
-  margin-left: auto;
+  width: 100%;
+  margin: 0 auto;
 }

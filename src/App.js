@@ -1,16 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import ApartComponent from './components/ApartComponent/ApartComponent';
+import MySelect from './components/UI/MySelect/MySelect';
 import './App.css';
 
 function App() {
   const [apartments, setApartments] = useState([]);
+  const [sortedAparts, setSortedAparts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedSort, setSelectedSort] = useState('');
+
+  const options = [
+    {name: 'By Floor', value: 'floor'},
+    {name: 'By Price', value: 'price'}
+  ]
 
   const fetchData = async () => {
     const data = await fetch('http://localhost:3001/getAparts');
     const response = await data.json();
     setApartments(response);
   }
+
+  useMemo(() => {
+    if(!selectedSort) {
+      setSortedAparts(apartments)
+      return;
+    };
+    const sorted = [...apartments].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
+    setSortedAparts(sorted)
+  }, [selectedSort, apartments])
 
   useEffect(() => {
     setLoading(true);
@@ -25,11 +42,17 @@ function App() {
   return (
     <div className='App'>
       <h1>Aparts List</h1>
+      <MySelect
+        value={selectedSort}
+        onSelectChange={value => setSelectedSort(value)}
+        options={options}
+        defaultValue='Sort by'
+      />
       {
         loading ? (
           <h2>Loading...</h2>
         ) : (
-          apartments.map(apart => (
+          sortedAparts.map(apart => (
             <ApartComponent
               key={apart.id}
               id={apart.id}
@@ -37,6 +60,7 @@ function App() {
               floor={apart.floor}
               rooms={apart.rooms}
               price={apart.price}
+              img={apart.layout_image}
             />
           ))
         )

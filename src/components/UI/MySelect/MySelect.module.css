@@ -1,0 +1,11 @@
+.select {
+  padding: 10px;
+  font-family: inherit;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 20px rgba(8, 18, 43, 0.3);
+  width: 100%;
+  color: brown;
+}

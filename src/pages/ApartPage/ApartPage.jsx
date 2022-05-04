@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { fetchApartament } from '../../API/API';
 import { useFetching } from '../../hooks/useFetching';
 
 import classes from './ApartPage.module.css';
@@ -9,9 +10,8 @@ const ApartPage = () => {
   const [apartData, setApartData] = useState({});
 
   const [fetchApart, isLoading, error] = useFetching(async () => {
-    const data = await fetch(`http://localhost:3001/getApartById?id=${id}`);
-    const response = await data.json();
-    setApartData(response);
+    const apartament = await fetchApartament(id);
+    setApartData(apartament);
   });
 
   useEffect(() => {
@@ -62,8 +62,6 @@ const ApartPage = () => {
         )
       )}
     </div>
-
-      
   );
 };
 

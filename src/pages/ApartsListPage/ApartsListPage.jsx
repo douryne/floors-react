@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import MySelect from '../../components/UI/MySelect/MySelect';
+import ApartsList from '../../components/ApartsList/ApartsList';
 import { useSortedAparts } from '../../hooks/useSortedAparts';
 import { useFetching } from '../../hooks/useFetching';
-import ApartsList from '../../components/ApartsList/ApartsList';
+import { fetchApartaments } from '../../API/API';
 
 import classes from './ApartsListPage.module.css';
 
@@ -11,9 +12,8 @@ const ApartsListPage = () => {
   const [selectedSort, setSelectedSort] = useState('');
 
   const [fetchAparts, isLoading, error] = useFetching(async () => {
-    const data = await fetch('http://localhost:3001/getAparts');
-    const response = await data.json();
-    setApartments(response);
+    const apartamentsRes = await fetchApartaments();
+    setApartments(apartamentsRes);
   });
 
   const options = [

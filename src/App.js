@@ -17,8 +17,13 @@ function App() {
   });
 
   const options = [
+    {name: 'By ID', value: 'id'},
     {name: 'By Floor', value: 'floor'},
-    {name: 'By Price', value: 'price'}
+    {name: 'By Price', value: 'price'},
+    {name: 'By Rooms', value: 'rooms'},
+    {name: 'By Total Area', value: 'area_total'},
+    {name: 'By Kitchen Area', value: 'area_kitchen'},
+    {name: 'By Live Area', value: 'area_live'},
   ]
 
   const sortedAparts = useSortedAparts(apartments, selectedSort);

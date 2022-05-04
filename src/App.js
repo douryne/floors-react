@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ApartComponent from './components/ApartComponent/ApartComponent';
 import './App.css';
 
 function App() {
@@ -22,14 +23,21 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <h1>Works!</h1>
+    <div className='App'>
+      <h1>Aparts List</h1>
       {
         loading ? (
           <h2>Loading...</h2>
         ) : (
           apartments.map(apart => (
-            <div key={apart.id}>{apart.floor}</div>
+            <ApartComponent
+              key={apart.id}
+              id={apart.id}
+              area_total={apart.area_total}
+              floor={apart.floor}
+              rooms={apart.rooms}
+              price={apart.price}
+            />
           ))
         )
       }

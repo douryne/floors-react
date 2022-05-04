@@ -1,0 +1,38 @@
+.apart {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  padding: 20px 40px;
+  margin: 50px 0;
+  border-radius: 20px;
+  width: 80%;
+}
+
+.heading {
+  font-size: 2rem;
+  color: rgb(8, 18, 43);
+  font-weight: 300;
+  margin: 0;
+}
+
+.id {
+  color: brown;
+  font-weight: 400;
+}
+
+.list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.list li {
+  line-height: 2rem;
+  font-size: 1.1rem;
+  color: black;
+  opacity: 0.8;
+}
+
+.price {
+  color: rgb(8, 18, 43);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: brown;
+}

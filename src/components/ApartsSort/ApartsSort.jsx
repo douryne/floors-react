@@ -1,24 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import MyButton from '../../components/UI/MyButton/MyButton';
 import MySelect from '../../components/UI/MySelect/MySelect';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 import classes from './ApartsSort.module.css';
 
 const ApartsSort = ({content, selectedSort, setSelectedSort}) => {
   const [additionalSortTypes, setAdditionalSortTypes] = useState(false);
 
-  useEffect(() => {
-    const selectedSortLC = JSON.parse(localStorage.getItem('selectedSort'));
-    const additionalSortTypesLC = JSON.parse(localStorage.getItem('additionalSortTypes'));
-
-    if (selectedSortLC) {
-      setSelectedSort(selectedSortLC);
-    }
-    if(additionalSortTypesLC) {
-      setAdditionalSortTypes(additionalSortTypesLC)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  useLocalStorage('selectedSort', setSelectedSort);
+  useLocalStorage('additionalSortTypes', setAdditionalSortTypes);
 
   useEffect(() => {
     localStorage.setItem('additionalSortTypes', JSON.stringify(additionalSortTypes));

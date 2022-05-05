@@ -1,48 +1,50 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import MyButton from '../../components/UI/MyButton/MyButton';
 import MySelect from '../../components/UI/MySelect/MySelect';
 
 import classes from './ApartsSort.module.css';
 
-const ApartsSort = ({selectedSort, setSelectedSort, additionalSortTypes, setAdditionalSortTypes}) => {
-  const sortTypes = [
-    {name: 'By Floor', value: 'floor'},
-    {name: 'By Price', value: 'price'},
-    {name: 'By Rooms', value: 'rooms'},
-    {name: 'By Total Area', value: 'area_total'},
-  ]
-  
-  const additionalTypes = [
-    {name: 'By ID', value: 'id'},
-    {name: 'By Kitchen Area', value: 'area_kitchen'},
-    {name: 'By Live Area', value: 'area_live'},
-  ]
+const ApartsSort = ({content, selectedSort, setSelectedSort}) => {
+  const [additionalSortTypes, setAdditionalSortTypes] = useState(false);
 
-  const fromToTypes = [
-    {name: 'From Min To Max', value: 'min'},
-    {name: 'From Max To Min', value: 'max'}
-  ]
+  useEffect(() => {
+    const selectedSortLC = JSON.parse(localStorage.getItem('selectedSort'));
+    const additionalSortTypesLC = JSON.parse(localStorage.getItem('additionalSortTypes'));
+
+    if (selectedSortLC) {
+      setSelectedSort(selectedSortLC);
+    }
+    if(additionalSortTypesLC) {
+      setAdditionalSortTypes(additionalSortTypesLC)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('additionalSortTypes', JSON.stringify(additionalSortTypes));
+    localStorage.setItem('selectedSort', JSON.stringify(selectedSort));
+  }, [selectedSort, additionalSortTypes])
 
   return (
     <div className={classes.sortSection}>
     <MySelect
       value={selectedSort.sortType}
       onSelectChange={value => setSelectedSort({...selectedSort, sortType: value})}
-      options={sortTypes}
+      options={content.sortTypes}
       defaultValue={{name: 'Sort By', value: ''}}
     />
     {additionalSortTypes ? (
       <MySelect
         value={selectedSort.sortType}
         onSelectChange={value => setSelectedSort({...selectedSort, sortType: value})}
-        options={additionalTypes}
+        options={content.additionalTypes}
         defaultValue={{name: 'Sort By', value: ''}}
       />
     ) : <></>}
     <MySelect
       value={selectedSort.from}
       onSelectChange={value => setSelectedSort({...selectedSort, from: value})}
-      options={fromToTypes}
+      options={content.fromToTypes}
       defaultValue={{name: 'From To', value: ''}}
     />
     <MyButton onClickChanger={() => setAdditionalSortTypes(!additionalSortTypes)}>

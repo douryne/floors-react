@@ -9,44 +9,45 @@ import classes from './ApartsListPage.module.css';
 
 const ApartsListPage = () => {
   const [apartments, setApartments] = useState([]);
-  const [additionalSortTypes, setAdditionalSortTypes] = useState(false);
   const [selectedSort, setSelectedSort] = useState({sortType: '', from: ''});
 
   const [fetchAparts, isLoading, error] = useFetching(async () => {
     const apartamentsRes = await fetchApartaments();
     setApartments(apartamentsRes);
   });
+  
+  useEffect(() => {
+    fetchAparts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) 
 
   const sortedAparts = useSortedAparts(apartments, selectedSort);
 
-  useEffect(() => {
-    fetchAparts();
-
-    const selectedSortLC = JSON.parse(localStorage.getItem('selectedSort'));
-    const additionalSortTypesLC = JSON.parse(localStorage.getItem('additionalSortTypes'));
-
-    if (selectedSortLC) {
-      setSelectedSort(selectedSortLC);
-    }
-    if(additionalSortTypesLC) {
-      setAdditionalSortTypes(additionalSortTypesLC)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('additionalSortTypes', JSON.stringify(additionalSortTypes));
-    localStorage.setItem('selectedSort', JSON.stringify(selectedSort));
-  }, [selectedSort, additionalSortTypes])
+  const sortContent = {
+    sortTypes: [
+      {name: 'By Floor', value: 'floor'},
+      {name: 'By Price', value: 'price'},
+      {name: 'By Rooms', value: 'rooms'},
+      {name: 'By Total Area', value: 'area_total'},
+    ],
+    additionalTypes: [
+      {name: 'By ID', value: 'id'},
+      {name: 'By Kitchen Area', value: 'area_kitchen'},
+      {name: 'By Live Area', value: 'area_live'},
+    ],
+    fromToTypes: [
+      {name: 'From Min To Max', value: 'min'},
+      {name: 'From Max To Min', value: 'max'}
+    ]
+  }
 
   return (
     <div>
       <h1 className={classes.heading}>Aparts List</h1>
       <ApartsSort
+        content={sortContent}
         selectedSort={selectedSort}
         setSelectedSort={setSelectedSort}
-        additionalSortTypes={additionalSortTypes}
-        setAdditionalSortTypes={setAdditionalSortTypes}
       />
       {
         isLoading ? (

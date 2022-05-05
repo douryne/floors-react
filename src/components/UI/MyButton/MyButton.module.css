@@ -5,4 +5,16 @@
   border-radius: 10px;
   padding: 10px 20px;
   font-family: inherit;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn:hover {
+  filter: contrast(1.5);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

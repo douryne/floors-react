@@ -1,11 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ApartsList from '../../components/ApartsList/ApartsList';
 import ApartsSort from '../../components/ApartsSort/ApartsSort';
-import { useSortedAparts } from '../../hooks/useSortedAparts';
 import { useFetching } from '../../hooks/useFetching';
 import { fetchApartaments } from '../../API/API';
 
 import classes from './ApartsListPage.module.css';
+import { usePaginatedAndSorted } from '../../hooks/usePaginatedAndSorted';
+import MyButton from '../../components/UI/MyButton/MyButton';
 
 const ApartsListPage = () => {
   const [apartments, setApartments] = useState([]);
@@ -25,18 +26,7 @@ const ApartsListPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useMemo(() => {
-    setPage(1);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedSort])
-
-  const sortedAparts = useSortedAparts(apartments, selectedSort);
-
-  const paginatedAndSortedAparts = useMemo(() => {
-    if (!sortedAparts) return [];
-    return [...sortedAparts].slice((page-1)*apartsToShow, page*apartsToShow);
-  }, [page, sortedAparts]);
-
+  const paginatedAndSortedAparts = usePaginatedAndSorted(apartments, selectedSort, page, setPage, apartsToShow);
 
   const sortContent = {
     sortTypes: [
@@ -64,10 +54,12 @@ const ApartsListPage = () => {
         selectedSort={selectedSort}
         setSelectedSort={setSelectedSort}
       />
-      <div style={{marginBottom: '20px', display: 'flex', gap: '20px'}}>
-        <span className={classes.heading}>{page}</span>
-        <button disabled={page === 1} onClick={() => setPage(page-1)}>Prev</button>
-        <button disabled={page === totalPage} onClick={() => setPage(page+1)}>Next</button>
+      <div className={classes.pagination}>
+        <span className={`${classes.heading} ${classes.heading_page}`}>
+          Page:  <span className={classes.id}>{page}</span>
+        </span>
+        <MyButton disabled={page === 1} onClickChanger={() => setPage(page-1)}>Prev</MyButton>
+        <MyButton disabled={page === totalPage} onClickChanger={() => setPage(page+1)}>Next</MyButton>
       </div>
       {
         isLoading ? (

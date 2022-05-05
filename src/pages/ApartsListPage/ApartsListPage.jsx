@@ -7,6 +7,7 @@ import { fetchApartaments } from '../../API/API';
 import classes from './ApartsListPage.module.css';
 import { usePaginatedAndSorted } from '../../hooks/usePaginatedAndSorted';
 import MyButton from '../../components/UI/MyButton/MyButton';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 const ApartsListPage = () => {
   const [apartments, setApartments] = useState([]);
@@ -20,13 +21,19 @@ const ApartsListPage = () => {
     setApartments(apartamentsRes);
     setTotalPage(Math.ceil(apartamentsRes.length/apartsToShow));
   });
+
+  const paginatedAndSortedAparts = usePaginatedAndSorted(apartments, selectedSort, page, apartsToShow);
+
+  useLocalStorage('page', setPage);
+  
+  useEffect(() => {
+    localStorage.setItem('page', JSON.stringify(page));
+  }, [page])
   
   useEffect(() => {
     fetchAparts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const paginatedAndSortedAparts = usePaginatedAndSorted(apartments, selectedSort, page, setPage, apartsToShow);
 
   const sortContent = {
     sortTypes: [
@@ -52,7 +59,10 @@ const ApartsListPage = () => {
       <ApartsSort
         content={sortContent}
         selectedSort={selectedSort}
-        setSelectedSort={setSelectedSort}
+        setSelectedSort={(value) => {
+          setSelectedSort(value);
+          setPage(1);
+        }}
       />
       <div className={classes.pagination}>
         <span className={`${classes.heading} ${classes.heading_page}`}>

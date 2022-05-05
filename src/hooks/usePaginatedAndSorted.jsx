@@ -2,12 +2,8 @@
 import {useMemo} from 'react'
 import { useSortedAparts } from "./useSortedAparts";
 
-export const usePaginatedAndSorted = (apartments, selectedSort, page, setPage, apartsToShow) => {
+export const usePaginatedAndSorted = (apartments, selectedSort, page, apartsToShow) => {
   const sortedAparts = useSortedAparts(apartments, selectedSort);
-
-  useMemo(() => {
-    setPage(1);
-  }, [sortedAparts])
 
   const paginatedAndSortedAparts = useMemo(() => {
     if (!sortedAparts) return [];

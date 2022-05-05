@@ -14,8 +14,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm start`
-Runs the server on [http://localhost:3001] to make possible get data by http request.
+### `npm server`
+Runs the server on [http://localhost:3001](http://localhost:3001) to make possible get data by http request.
 
 
 ### `npm test`

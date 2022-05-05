@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MyButton from '../../components/UI/MyButton/MyButton';
 import MySelect from '../../components/UI/MySelect/MySelect';
 
 import classes from './ApartsSort.module.css';
 
-const ApartsSort = ({selectedSort, setSelectedSort}) => {
-  const [additionalSortTypes, setAdditionalSortTypes] = useState(false);
-  
-
+const ApartsSort = ({selectedSort, setSelectedSort, additionalSortTypes, setAdditionalSortTypes}) => {
   const sortTypes = [
     {name: 'By Floor', value: 'floor'},
     {name: 'By Price', value: 'price'},

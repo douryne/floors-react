@@ -9,6 +9,7 @@ import classes from './ApartsListPage.module.css';
 
 const ApartsListPage = () => {
   const [apartments, setApartments] = useState([]);
+  const [additionalSortTypes, setAdditionalSortTypes] = useState(false);
   const [selectedSort, setSelectedSort] = useState({sortType: '', from: ''});
 
   const [fetchAparts, isLoading, error] = useFetching(async () => {
@@ -20,13 +21,33 @@ const ApartsListPage = () => {
 
   useEffect(() => {
     fetchAparts();
+
+    const selectedSortLC = JSON.parse(localStorage.getItem('selectedSort'));
+    const additionalSortTypesLC = JSON.parse(localStorage.getItem('additionalSortTypes'));
+
+    if (selectedSortLC) {
+      setSelectedSort(selectedSortLC);
+    }
+    if(additionalSortTypesLC) {
+      setAdditionalSortTypes(additionalSortTypesLC)
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem('additionalSortTypes', JSON.stringify(additionalSortTypes));
+    localStorage.setItem('selectedSort', JSON.stringify(selectedSort));
+  }, [selectedSort, additionalSortTypes])
 
   return (
     <div>
       <h1 className={classes.heading}>Aparts List</h1>
-      <ApartsSort selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
+      <ApartsSort
+        selectedSort={selectedSort}
+        setSelectedSort={setSelectedSort}
+        additionalSortTypes={additionalSortTypes}
+        setAdditionalSortTypes={setAdditionalSortTypes}
+      />
       {
         isLoading ? (
           <h2>Loading...</h2>

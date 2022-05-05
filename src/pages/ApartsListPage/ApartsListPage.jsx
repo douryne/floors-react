@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MySelect from '../../components/UI/MySelect/MySelect';
 import ApartsList from '../../components/ApartsList/ApartsList';
+import MyButton from '../../components/UI/MyButton/MyButton';
 import { useSortedAparts } from '../../hooks/useSortedAparts';
 import { useFetching } from '../../hooks/useFetching';
 import { fetchApartaments } from '../../API/API';
@@ -66,11 +67,9 @@ const ApartsListPage = () => {
           options={fromToTypes}
           defaultValue={{name: 'From To', value: ''}}
         />
-      <button
-        onClick={() => setAdditionalSortTypes(!additionalSortTypes)}
-        className={classes.sortBtn}>
-        {additionalSortTypes ? 'Close Additional Sort Types' : 'More Sort Types'}
-      </button>
+        <MyButton onClickChanger={() => setAdditionalSortTypes(!additionalSortTypes)}>
+          {additionalSortTypes ? 'Close Additional Sort Types' : 'More Sort Types'}
+        </MyButton>
       </div>
       {
         isLoading ? (

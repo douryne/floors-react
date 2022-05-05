@@ -1,5 +1,5 @@
 .apart {
-  box-shadow: 0 0 50px rgba(8, 18, 43, 0.3);
+  box-shadow: 0 0 20px rgba(8, 18, 43, 0.3);
   padding: 20px 10px;
   border-radius: 20px;
   display: flex;
@@ -10,7 +10,7 @@
 }
 
 .apart:hover {
-  box-shadow: 0 0 50px rgba(131, 4, 4, 0.4);
+  box-shadow: 0 0 20px rgba(131, 4, 4, 0.5);
 }
 
 .textContent {

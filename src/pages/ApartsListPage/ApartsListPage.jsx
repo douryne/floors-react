@@ -10,6 +10,7 @@ import classes from './ApartsListPage.module.css';
 const ApartsListPage = () => {
   const [apartments, setApartments] = useState([]);
   const [selectedSort, setSelectedSort] = useState({sortType: '', from: ''});
+  const [additionalSortTypes, setAdditionalSortTypes] = useState(false);
 
   const [fetchAparts, isLoading, error] = useFetching(async () => {
     const apartamentsRes = await fetchApartaments();
@@ -17,11 +18,14 @@ const ApartsListPage = () => {
   });
 
   const sortTypes = [
-    {name: 'By ID', value: 'id'},
     {name: 'By Floor', value: 'floor'},
     {name: 'By Price', value: 'price'},
     {name: 'By Rooms', value: 'rooms'},
     {name: 'By Total Area', value: 'area_total'},
+  ]
+  
+  const additionalTypes = [
+    {name: 'By ID', value: 'id'},
     {name: 'By Kitchen Area', value: 'area_kitchen'},
     {name: 'By Live Area', value: 'area_live'},
   ]
@@ -48,12 +52,25 @@ const ApartsListPage = () => {
           options={sortTypes}
           defaultValue={{name: 'Sort By', value: ''}}
         />
+        {additionalSortTypes ? (
+          <MySelect
+            value={selectedSort.sortType}
+            onSelectChange={value => setSelectedSort({...selectedSort, sortType: value})}
+            options={additionalTypes}
+            defaultValue={{name: 'Sort By', value: ''}}
+          />
+        ) : <></>}
         <MySelect
           value={selectedSort.from}
           onSelectChange={value => setSelectedSort({...selectedSort, from: value})}
           options={fromToTypes}
           defaultValue={{name: 'From To', value: ''}}
         />
+      <button
+        onClick={() => setAdditionalSortTypes(!additionalSortTypes)}
+        className={classes.sortBtn}>
+        {additionalSortTypes ? 'Close Additional Sort Types' : 'More Sort Types'}
+      </button>
       </div>
       {
         isLoading ? (
